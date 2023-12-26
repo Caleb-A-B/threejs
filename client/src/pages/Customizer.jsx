@@ -9,7 +9,7 @@ import { downloadCanvasToImage, reader } from '../config/helpers';
 import { EditorTabs, FilterTabs, DecalTypes } from '../config/constants';
 import { fadeAnimation, slideAnimation } from '../config/motion';
 import { AIPicker, ColorPicker, CustomButton, FilePicker, Tab } from '../components'
-
+const backendUrl = 'http://localhost:5000/api/v1/dalle/';
 const Customizer = () => {
   const snap = useSnapshot(state);
 
@@ -23,6 +23,8 @@ const Customizer = () => {
     logoShirt: true,
     stylishShirt: false, 
   }) 
+
+  
   
 //show content dependent on active tab
  const generateTabContent = () => {
@@ -53,22 +55,21 @@ const Customizer = () => {
 
     try {
       setGeneratingImg(true);
-
+      console.log(prompt);
       const response = await fetch(backendUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-          prompt,
-        })
+        body: prompt
       })    
       
-      const data = await response.json();
+      console.log(await response.json());
+      // const data = await response.json();
 
-      handleDecals(type, 'data:image/png;base64,${data.photo')
+      // handleDecals(type, 'data:image/png;base64,${data.photo')
     } catch (error) {
-      alert(error)      
+      console.log(error)      
     } finally {
       setGeneratingImg(false);
       setActiveEditorTab("");

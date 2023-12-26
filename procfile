@@ -1,0 +1,4 @@
+web: npm run start
+api: node server.js
+
+<!-- ai doesnt work/heroku problems -->
